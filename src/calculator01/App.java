@@ -6,6 +6,7 @@ public class App {
     public static void main(String[] args) {
 
         int input1, input2, result;
+        // 사칙연산을 입력받을 스트링 클래스
         String input3;
         String exitFlag = "";
         char operationSymbol;
@@ -70,5 +71,7 @@ public class App {
             System.out.print("계산을 계속 하시겠습니까? (y or exit) :");
             exitFlag = sc.nextLine();
         }
+
+        sc.close();
     }
 }
