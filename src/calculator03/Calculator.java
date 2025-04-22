@@ -4,49 +4,56 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Calculator<T> {
+    
+    private final List<T> resultList = new ArrayList<>();
+    private final ArithmeticOperation<T> operations;
 
-    T type;
+    public Calculator(ArithmeticOperation<T> operations) {
+        this.operations = operations;
+    }
 
-    private final List<Double> resultList = new ArrayList<>();
-
-    public void calculate(String input1, String input2, char operationSymbol) throws ArithmeticException {
+    public void calculate(T input1, T input2, char operationSymbol) {
 
         OperatorType op = OperatorType.changeSymbol(operationSymbol);
-
-        if(type instanceof Double) {
-            double a = Double.parseDouble(input1);
-            double b = Double.parseDouble(input2);
-
-            if(op != null)
-                switch (op) {
-                    case PLUS:
-                        setResultList(a + b);
-                        break;
-                    case MINUS:
-                        setResultList(a - b);
-                        break;
-                    case MULTIPLY:
-                        setResultList(a * b);
-                        break;
-                    case DIVIDE:
-                        setResultList(a / b);
-                        break;
+        if (op == null) throw new IllegalArgumentException("잘못된 연산자입니다.");
+        T result = null;
+        switch (op) {
+            case PLUS:
+                result = operations.plus(input1, input2);
+                break;
+            case MINUS:
+                result = operations.minus(input1, input2);
+                break;
+            case MULTIPLY:
+                result = operations.multiply(input1, input2);
+                break;
+            case DIVIDE:
+                try {
+                    result = operations.divide(input1, input2);
+                } catch (ArithmeticException e) {
+                    System.out.println("0으로 나눌 수 없습니다.");
                 }
-            else {
-                throw new IllegalArgumentException();
-            }
-        }
+                break;
+        };
+
+        setResult(result);
     }
 
-    public T getResultList() {
-        return (T) resultList.get(resultList.size() - 1);
+    // 연산 기록 리스트에서 가장 최근값을 불러오는 getter 메소드
+    public T getResult() {
+        return resultList.get(resultList.size() - 1);
     }
 
-    public void setResultList(double num) {
-        resultList.add((Double) num);
+    // 연산 기록을 모두 확인하기위해 리스트 자체를 반환하는 getter 메소드
+    public List<T> getResultList() {
+        return resultList;
     }
 
-    public void removeResultList() {
-        resultList.remove(resultList.size()-1);
+    public void setResult(T result) {
+        resultList.add(result);
+    }
+
+    public void removeResult() {
+        resultList.remove(resultList.size() - 1);
     }
 }
