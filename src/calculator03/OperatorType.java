@@ -13,10 +13,6 @@ enum OperatorType {
         this.symbol = symbol;
     }
 
-    public char getSymbol() {
-        return this.symbol;
-    }
-
     // 입력받은 연산자에 해당하는 OperatorType을 반환하는 메소드.
     public static OperatorType changeSymbol(char symbol) {
         // 입력받은 연산자의 값이 있으면 OperatorType 상수를 반환한다.

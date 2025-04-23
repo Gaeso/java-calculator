@@ -15,6 +15,7 @@ public class Calculator<T> {
     public void calculate(T input1, T input2, char operationSymbol) {
 
         OperatorType op = OperatorType.changeSymbol(operationSymbol);
+
         if (op == null) throw new IllegalArgumentException("잘못된 연산자입니다.");
         T result = null;
         switch (op) {
@@ -34,7 +35,7 @@ public class Calculator<T> {
                     System.out.println("0으로 나눌 수 없습니다.");
                 }
                 break;
-        };
+        }
 
         setResult(result);
     }
